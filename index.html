@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roteiro — Algoritmos, Dados e Relações Humanas</title>
+<style>
+  :root {
+    --azul: #1a2b4a;
+    --azul-medio: #2d5086;
+    --azul-claro: #4a90d9;
+    --roxo: #6c3fa0;
+    --verde: #1e7c5a;
+    --laranja: #c45e1a;
+    --vermelho: #b52a2a;
+    --cinza: #f4f5f7;
+    --branco: #ffffff;
+    --texto: #1a1a2e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #eef1f7;
+    color: var(--texto);
+    line-height: 1.65;
+  }
+
+  /* CAPA */
+  .capa {
+    background: linear-gradient(135deg, var(--azul) 0%, var(--roxo) 100%);
+    color: white;
+    padding: 60px 40px 50px;
+    text-align: center;
+  }
+  .capa .tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .capa h1 { font-size: 2.4rem; font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
+  .capa .subtitulo { font-size: 1.1rem; opacity: 0.85; margin-bottom: 30px; }
+  .capa .meta { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+  .capa .meta span {
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
+
+  /* ÍNDICE */
+  .indice {
+    background: var(--azul);
+    color: white;
+    padding: 30px 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  .indice a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+  }
+  .indice a:hover { background: rgba(255,255,255,0.2); color: white; }
+
+  /* CONTAINER */
+  .container { max-width: 900px; margin: 0 auto; padding: 30px 20px 60px; }
+
+  /* SEÇÃO */
+  .secao {
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 28px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+
+  .secao-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px 28px;
+    color: white;
+  }
+  .secao-header .numero {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .secao-header h2 { font-size: 1.25rem; font-weight: 700; }
+  .secao-header .tempo {
+    margin-left: auto;
+    background: rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 4px 14px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .cor-intro    { background: linear-gradient(135deg, #1a2b4a, #2d5086); }
+  .cor-1        { background: linear-gradient(135deg, #2d5086, #4a90d9); }
+  .cor-2        { background: linear-gradient(135deg, #6c3fa0, #9b59b6); }
+  .cor-3        { background: linear-gradient(135deg, #1e7c5a, #27ae60); }
+  .cor-4        { background: linear-gradient(135deg, #c45e1a, #e67e22); }
+  .cor-5        { background: linear-gradient(135deg, #b52a2a, #e74c3c); }
+  .cor-conclusao { background: linear-gradient(135deg, #1a2b4a, #6c3fa0); }
+
+  .secao-body { padding: 24px 28px; }
+
+  /* BLOCOS INTERNOS */
+  .bloco {
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+  .bloco-topicos { background: #f0f4ff; border-left: 4px solid var(--azul-claro); }
+  .bloco-fala { background: #fff8f0; border-left: 4px solid var(--laranja); }
+  .bloco-frase { background: linear-gradient(135deg, #1a2b4a, #6c3fa0); color: white; text-align: center; border-radius: 12px; padding: 20px 24px; }
+  .bloco-slide { background: #f0fff5; border-left: 4px solid var(--verde); }
+  .bloco-atencao { background: #fff0f0; border-left: 4px solid var(--vermelho); }
+
+  .bloco-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    opacity: 0.7;
+  }
+  .bloco-frase .bloco-label { opacity: 0.7; color: white; }
+  .bloco-frase .frase-texto {
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.5;
+    font-style: italic;
+  }
+  .bloco-frase .frase-autor {
+    font-size: 0.82rem;
+    opacity: 0.7;
+    margin-top: 8px;
+  }
+
+  ul.topicos { list-style: none; padding: 0; }
+  ul.topicos li {
+    padding: 5px 0 5px 22px;
+    position: relative;
+    font-size: 0.95rem;
+  }
+  ul.topicos li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--azul-claro);
+  }
+
+  .fala-texto {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .fala-texto strong { color: var(--azul); }
+  .fala-dica {
+    display: inline-block;
+    background: #fef3e2;
+    border: 1px solid #f5c26b;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    margin-top: 10px;
+    color: #7a4a00;
+  }
+
+  /* SLIDE SUGESTÃO */
+  .slide-sugestao {
+    border: 1.5px dashed #27ae60;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    background: white;
+  }
+  .slide-titulo {
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--verde);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .slide-num {
+    background: var(--verde);
+    color: white;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+  }
+  .slide-conteudo { font-size: 0.88rem; color: #444; line-height: 1.5; }
+
+  /* GRID 2 COLUNAS */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  @media (max-width: 600px) { .grid2 { grid-template-columns: 1fr; } }
+
+  /* DIVISOR */
+  .divisor { border: none; border-top: 2px dashed #e0e5ee; margin: 20px 0; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    border-radius: 5px;
+    padding: 2px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .badge-fala { background: #fde9c9; color: #8a4500; }
+  .badge-slide { background: #d4f5e2; color: #155a35; }
+  .badge-frase { background: #e0d7f5; color: #4a1f8a; }
+
+  /* LINHA DO TEMPO */
+  .timeline {
+    display: flex;
+    gap: 0;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .tl-item {
+    flex: 1;
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .tl-1 { background: #1a2b4a; color: white; }
+  .tl-2 { background: #2d5086; color: white; }
+  .tl-3 { background: #6c3fa0; color: white; }
+  .tl-4 { background: #1e7c5a; color: white; }
+  .tl-5 { background: #c45e1a; color: white; }
+  .tl-6 { background: #b52a2a; color: white; }
+  .tl-total { background: #1a1a2e; color: #ffd700; }
+  .tl-item .tl-min { font-size: 1.1rem; font-weight: 800; display: block; }
+
+  h3.subtitulo-secao {
+    font-size: 0.9rem;
+    color: var(--azul-medio);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    border-bottom: 2px solid #e0e5ee;
+    padding-bottom: 8px;
+  }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="capa">
+  <div class="tag">📋 Roteiro de Apresentação</div>
+  <h1>Algoritmos, Dados<br>e Relações Humanas</h1>
+  <div class="subtitulo">Vigilância, poder e autonomia no mundo digital</div>
+  <div class="meta">
+    <span>🎓 Seminário acadêmico</span>
+    <span>⏱ ~30–40 min</span>
+    <span>📑 Script completo + slides</span>
+  </div>
+</div>
+
+<!-- ÍNDICE -->
+<div class="indice">
+  <a href="#intro">Introdução</a>
+  <a href="#s1">1. O que são algoritmos</a>
+  <a href="#s2">2. Bolhas e consumo</a>
+  <a href="#s3">3. Capitalismo de vigilância</a>
+  <a href="#s4">4. Privacidade e LGPD</a>
+  <a href="#s5">5. Resistência e autonomia</a>
+  <a href="#conclusao">Conclusão</a>
+</div>
+
+<!-- CONTAINER -->
+<div class="container">
+
+  <!-- LINHA DO TEMPO GERAL -->
+  <div class="secao" style="overflow:visible">
+    <div class="secao-body">
+      <h3 class="subtitulo-secao">⏱ Distribuição de Tempo Sugerida</h3>
+      <div class="timeline">
+        <div class="tl-item tl-1"><span class="tl-min">3'</span>Intro</div>
+        <div class="tl-item tl-2"><span class="tl-min">6'</span>Algoritmos</div>
+        <div class="tl-item tl-3"><span class="tl-min">6'</span>Bolhas</div>
+        <div class="tl-item tl-4"><span class="tl-min">7'</span>Vigilância</div>
+        <div class="tl-item tl-5"><span class="tl-min">6'</span>Privacidade</div>
+        <div class="tl-item tl-6"><span class="tl-min">5'</span>Resistência</div>
+        <div class="tl-item tl-total"><span class="tl-min">~33'</span>Total</div>
+      </div>
+      <p style="font-size:0.85rem; color:#666; text-align:center">Ajuste conforme o tempo disponível. Priorize as seções 3 e 4 se precisar cortar.</p>
+    </div>
+  </div>
+
+  <!-- ======================== INTRODUÇÃO ======================== -->
+  <div class="secao" id="intro">
+    <div class="secao-header cor-intro">
+      <div class="numero">✦</div>
+      <h2>Abertura — Como começar com impacto</h2>
+      <div class="tempo">⏱ 3 min</div>
+    </div>
+    <div class="secao-body">
+
+      <div class="bloco bloco-fala">
+        <div class="bloco-label">🎤 Script de fala — Abertura</div>
+        <div class="fala-texto">
+          <strong>"Quantas decisões foram tomadas sobre você hoje — sem que você soubesse?"</strong>
+          <br><br>
+          Se você usou o celular hoje de manhã, <strong>um algoritmo decidiu o que você viu primeiro.</strong> Se você fez uma busca no Google, <strong>um sistema ranqueou o que é verdade para você.</strong> Se você entrou em algum aplicativo, <strong>seu comportamento foi registrado, analisado e vendido.</strong>
+          <br><br>
+          Hoje vamos falar sobre um tema que é invisível — mas que molda profundamente quem somos, o que compramos, o que votamos e o que acreditamos.
+          Vamos falar sobre <strong>algoritmos, dados e o que está em jogo nas relações humanas da era digital.</strong>
+        </div>
+        <span class="fala-dica">💡 Dica: faça uma pausa dramática após a primeira pergunta. Deixe o silêncio trabalhar.</span>
+      </div>
+
+      <div class="bloco bloco-frase">
+        <div class="bloco-label">💬 Frase de impacto para o slide de abertura</div>
+        <div class="frase-texto">"Se o serviço é gratuito, o produto é você."</div>
+        <div class="frase-autor">— Expressão popular da era digital</div>
+      </div>
+
+      <div class="bloco bloco-slide">
+        <div class="bloco-label">🖥 Sugestão de slide — Capa / Abertura</div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 1</span> Slide de impacto inicial</div>
+          <div class="slide-conteudo">
+            Fundo escuro (preto ou azul profundo). Texto centralizado em branco grande:<br>
+            <em>"Quantas decisões foram tomadas sobre você hoje sem que você soubesse?"</em><br>
+            Sem imagens. Só a pergunta. Deixe o silêncio fazer o trabalho.
+          </div>
+        </div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 2</span> Título do seminário</div>
+          <div class="slide-conteudo">
+            Título: <strong>Algoritmos, Dados e Relações Humanas</strong><br>
+            Subtítulo: Vigilância, poder e autonomia no mundo digital<br>
+            Elemento visual: ícone de rede neural ou código binário ao fundo (opacidade baixa)
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================== SEÇÃO 1 ======================== -->
+  <div class="secao" id="s1">
+    <div class="secao-header cor-1">
+      <div class="numero">1</div>
+      <h2>O que são algoritmos — e por que isso importa</h2>
+      <div class="tempo">⏱ 6 min</div>
+    </div>
+    <div class="secao-body">
+
+      <h3 class="subtitulo-secao">📌 Pontos-chave para cobrir</h3>
+      <div class="bloco bloco-topicos">
+        <div class="bloco-label">Tópicos</div>
+        <ul class="topicos">
+          <li>Definição simples: sequência de instruções lógicas para resolver um problema</li>
+          <li>Algoritmos como "sistema nervoso" das plataformas digitais</li>
+          <li>Evolução: de regras fixas → Machine Learning → Deep Learning</li>
+          <li>Redes neurais artificiais inspiradas no cérebro humano</li>
+          <li>Onde estão presentes: assistentes virtuais, reconhecimento facial, recomendações</li>
+          <li>Byung-Chul Han: o sujeito transformado em dado gerenciável</li>
+        </ul>
+      </div>
+
+      <div class="bloco bloco-fala">
+        <div class="bloco-label">🎤 Script de fala</div>
+        <div class="fala-texto">
+          Vamos começar pelo básico: o que é um algoritmo?
+          <br><br>
+          Na essência, é uma <strong>receita de bolo para computadores</strong> — uma sequência de passos lógicos para resolver um problema. O algoritmo que calcula seu troco no mercado segue essa lógica simples.
+          <br><br>
+          Mas os algoritmos de hoje são muito mais sofisticados. Com o <strong>Machine Learning</strong> — aprendizado de máquina —, os sistemas pararam de ser apenas programados. Eles <em>aprendem</em>. A partir de bilhões de dados, eles identificam padrões que nenhum ser humano conseguiria enxergar sozinho.
+          <br><br>
+          E as <strong>Redes Neurais</strong>, inspiradas no cérebro humano, levam isso ainda mais longe: o chamado <em>Deep Learning</em> consegue reconhecer rostos, interpretar linguagem, prever comportamentos — com precisão crescente.
+          <br><br>
+          O filósofo coreano <strong>Byung-Chul Han</strong> fez um alerta importante: quando tudo isso se aplica à vida humana, o que acontece é uma transformação silenciosa. <strong>A pessoa vira um perfil. A experiência vira dado. O sujeito vira número gerenciável.</strong>
+        </div>
+        <span class="fala-dica">💡 Use a analogia da "receita de bolo" — é didática e quebra a barreira técnica com o público.</span>
+      </div>
+
+      <div class="bloco bloco-frase">
+        <div class="bloco-label">💬 Frases de impacto para os slides</div>
+        <div class="frase-texto">"O algoritmo não apenas descreve quem você é — ele decide quem você vai se tornar."</div>
+      </div>
+
+      <hr class="divisor">
+
+      <div class="bloco bloco-frase" style="background: linear-gradient(135deg, #2d5086, #4a90d9);">
+        <div class="bloco-label">💬 Citação para slide</div>
+        <div class="frase-texto">"A digitalização transforma o sujeito em dado, em perfil, em número gerenciável — produzindo uma violência invisível, psíquica."</div>
+        <div class="frase-autor">— Byung-Chul Han, No Enxame (2013)</div>
+      </div>
+
+      <div class="bloco bloco-slide">
+        <div class="bloco-label">🖥 Sugestões de slides</div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 3</span> O que é um algoritmo?</div>
+          <div class="slide-conteudo">
+            Diagrama simples: ENTRADA → PROCESSAMENTO → SAÍDA<br>
+            Exemplos visuais abaixo: calculadora, GPS, TikTok, reconhecimento facial
+          </div>
+        </div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 4</span> Evolução: de regras a aprendizado</div>
+          <div class="slide-conteudo">
+            Linha do tempo visual: Algoritmo simples → Machine Learning → Redes Neurais → Deep Learning<br>
+            Ícone de cérebro conectado a chip
+          </div>
+        </div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 5</span> Citação de Byung-Chul Han</div>
+          <div class="slide-conteudo">
+            Fundo escuro, citação centralizada em destaque. Foto do filósofo no canto.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================== SEÇÃO 2 ======================== -->
+  <div class="secao" id="s2">
+    <div class="secao-header cor-2">
+      <div class="numero">2</div>
+      <h2>Bolhas, câmaras de eco e consumo manipulado</h2>
+      <div class="tempo">⏱ 6 min</div>
+    </div>
+    <div class="secao-body">
+
+      <h3 class="subtitulo-secao">📌 Pontos-chave para cobrir</h3>
+      <div class="bloco bloco-topicos">
+        <div class="bloco-label">Tópicos</div>
+        <ul class="topicos">
+          <li>Algoritmos de recomendação: Instagram, TikTok, YouTube — o que monitoram</li>
+          <li>Filtros bolha e câmaras de eco — conceito de Eli Pariser (2011)</li>
+          <li>Consequência política: polarização, desinformação premiada pelo engajamento</li>
+          <li>Precificação dinâmica em Shopee, Amazon, Shein — consumidores diferentes, preços diferentes</li>
+          <li>Frank Pasquale (The Black Box Society): a opacidade é uma escolha política, não técnica</li>
+          <li>Gatilhos psicológicos: escassez artificial e urgência</li>
+        </ul>
+      </div>
+
+      <div class="bloco bloco-fala">
+        <div class="bloco-label">🎤 Script de fala</div>
+        <div class="fala-texto">
+          Você já notou como o TikTok parece ler a sua mente? Como o YouTube sempre sugere exatamente o que você quer ver?
+          <br><br>
+          Isso não é coincidência — é <strong>engenharia.</strong> Esses algoritmos monitoram cada segundo da sua navegação: onde você pausou, o que curtiu, quanto tempo ficou em cada vídeo. A partir disso, constroem um <strong>perfil comportamental cada vez mais preciso</strong> — e usam esse perfil para te prender mais tempo na plataforma.
+          <br><br>
+          O efeito colateral é o que o pesquisador <strong>Eli Pariser</strong> chamou de <em>filtro bolha</em>: você progressivamente deixa de ver perspectivas diferentes das suas. Só vê o que confirma o que você já acredita. Isso tem consequências sérias para a democracia: <strong>fragmenta o debate público, aprofunda a polarização e premia a desinformação</strong> — porque o conteúdo falso gera mais reação, mais engajamento, mais cliques.
+          <br><br>
+          No comércio, o mecanismo é parecido. Você e seu colega podem abrir a mesma loja na Shopee e ver <strong>preços diferentes para o mesmo produto</strong>. É a precificação dinâmica: ajustada em tempo real conforme o seu perfil, seu histórico, sua localização. O jurista <strong>Frank Pasquale</strong> é direto: essa opacidade não é um limite técnico — <strong>é uma escolha deliberada de quem detém o poder.</strong>
+        </div>
+        <span class="fala-dica">💡 Aqui vale convidar o público: "Alguém já percebeu isso acontecendo com vocês?"</span>
+      </div>
+
+      <div class="bloco bloco-frase">
+        <div class="bloco-label">💬 Frase de impacto para slide</div>
+        <div class="frase-texto">"A bolha não é um bug do sistema. É o produto."</div>
+      </div>
+
+      <hr class="divisor">
+
+      <div class="bloco bloco-frase" style="background: linear-gradient(135deg, #4a2080, #9b59b6);">
+        <div class="bloco-label">💬 Citação para slide</div>
+        <div class="frase-texto">"A opacidade algorítmica não é um limite técnico — é uma escolha política."</div>
+        <div class="frase-autor">— Frank Pasquale, The Black Box Society (2015)</div>
+      </div>
+
+      <div class="bloco bloco-slide">
+        <div class="bloco-label">🖥 Sugestões de slides</div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 6</span> Como o algoritmo te monitora</div>
+          <div class="slide-conteudo">
+            Silhueta de pessoa cercada por ícones: 👁 tempo de tela, ❤ curtidas, ⏸ pausas, 📍 localização, 🛒 compras.<br>
+            Título: "Tudo que você faz online é dado coletado."
+          </div>
+        </div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 7</span> Filtro bolha</div>
+          <div class="slide-conteudo">
+            Duas imagens lado a lado: feed de uma pessoa vs feed de outra — conteúdos completamente opostos.<br>
+            Ou: diagrama de círculo fechado (a pessoa só recebe o que confirma o que ela pensa)
+          </div>
+        </div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 8</span> Precificação dinâmica</div>
+          <div class="slide-conteudo">
+            Screenshot comparando o mesmo produto com preços diferentes em telas diferentes.<br>
+            Chamada: "Você e seu amigo não vivem no mesmo internet."
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================== SEÇÃO 3 ======================== -->
+  <div class="secao" id="s3">
+    <div class="secao-header cor-3">
+      <div class="numero">3</div>
+      <h2>Capitalismo de vigilância — casos reais</h2>
+      <div class="tempo">⏱ 7 min</div>
+    </div>
+    <div class="secao-body">
+
+      <h3 class="subtitulo-secao">📌 Pontos-chave para cobrir</h3>
+      <div class="bloco bloco-topicos">
+        <div class="bloco-label">Tópicos</div>
+        <ul class="topicos">
+          <li>Shoshana Zuboff: capitalismo de vigilância — experiência humana como matéria-prima</li>
+          <li>Couldry e Mejias: colonialismo de dados — Sul Global fornece matéria-prima para o Norte</li>
+          <li>CASO: Cambridge Analytica (2018) — 87 mi usuários, Trump, Brexit, multa de US$5bi</li>
+          <li>CASO: Megavazamento brasileiro (2021) — 223 mi de CPFs, dark web, LGPD impotente</li>
+          <li>CASO: Dell (2024) — 49 mi de registros, Brasil entre os mais afetados</li>
+          <li>O usuário não é o cliente — é o produto</li>
+        </ul>
+      </div>
+
+      <div class="bloco bloco-fala">
+        <div class="bloco-label">🎤 Script de fala</div>
+        <div class="fala-texto">
+          Vamos ao coração do problema.
+          <br><br>
+          A economista <strong>Shoshana Zuboff</strong> cunhou um termo que muda tudo: <em>capitalismo de vigilância.</em> A lógica é simples e brutal: <strong>a sua experiência humana — seus medos, desejos, hábitos — é a matéria-prima gratuita</strong> que alimenta um mercado de predições comportamentais. Essas predições são vendidas a anunciantes, campanhas políticas, qualquer um que pague.
+          <br><br>
+          <strong>Cambridge Analytica, 2018.</strong> Os dados de comportamento de 87 milhões de usuários do Facebook foram coletados sem consentimento e usados para construir perfis psicológicos precisos. Esses perfis foram usados em campanhas de microtargeting político — apontados como decisivos na eleição de Trump e no Brexit. O Facebook pagou 5 bilhões de dólares de multa. Para contexto: isso representa menos de um mês de receita da empresa. <strong>Nenhuma restrição estrutural ao modelo de coleta foi imposta.</strong>
+          <br><br>
+          <strong>Brasil, 2021.</strong> 223 milhões de CPFs de brasileiros — incluindo de pessoas já mortas — foram disponibilizados gratuitamente em fóruns da dark web. Com fotos, renda, score financeiro, histórico de crédito. Para contextualizar: o Brasil tinha 212 milhões de habitantes vivos naquele momento. <strong>Cada brasileiro, vivo ou morto, estava naquele banco de dados.</strong> A LGPD estava em vigor. Suas sanções, não.
+          <br><br>
+          E em 2024, a Dell teve 49 milhões de registros de clientes — nomes, endereços, histórico de pedidos — colocados à venda em fóruns de cibercrime. O Brasil esteve entre os países mais afetados.
+        </div>
+        <span class="fala-dica">💡 Destaque os números de forma pausada. "223 milhões de CPFs" — pausa — "o Brasil tinha 212 milhões de vivos." Deixe a matemática assustar.</span>
+      </div>
+
+      <div class="bloco bloco-atencao">
+        <div class="bloco-label">⚠ Dado de alto impacto para destacar</div>
+        <p style="font-size:0.95rem">Em 2021, o Brasil tinha <strong>212 milhões de habitantes vivos</strong>. O vazamento expôs <strong>223 milhões de CPFs</strong> — incluindo mortos. <strong>Cada brasileiro estava naquele banco.</strong></p>
+      </div>
+
+      <div class="bloco bloco-frase">
+        <div class="bloco-label">💬 Frase de impacto para slide</div>
+        <div class="frase-texto">"Você não usa a plataforma.<br>A plataforma usa você."</div>
+      </div>
+
+      <hr class="divisor">
+
+      <div class="bloco bloco-frase" style="background: linear-gradient(135deg, #1e5a3a, #27ae60);">
+        <div class="bloco-label">💬 Citação para slide</div>
+        <div class="frase-texto">"A experiência humana é a matéria-prima gratuita convertida em predições comportamentais vendidas ao mercado."</div>
+        <div class="frase-autor">— Shoshana Zuboff, A Era do Capitalismo de Vigilância (2019)</div>
+      </div>
+
+      <div class="bloco bloco-slide">
+        <div class="bloco-label">🖥 Sugestões de slides</div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 9</span> A lógica do capitalismo de vigilância</div>
+          <div class="slide-conteudo">
+            Fluxograma: Dados do usuário → Perfil comportamental → Predições → Vendido para anunciantes/políticos<br>
+            Chamada: "O usuário não é o cliente. É o produto."
+          </div>
+        </div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 10</span> Cambridge Analytica</div>
+          <div class="slide-conteudo">
+            Número grande em destaque: <strong>87 milhões</strong> de perfis. Logos: Facebook, Trump 2016, Brexit.<br>
+            Linha de rodapé: "Multa: US$5bi. Mudança estrutural: zero."
+          </div>
+        </div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 11</span> Megavazamento brasileiro</div>
+          <div class="slide-conteudo">
+            Dois números lado a lado: <strong>212 mi</strong> (brasileiros vivos) × <strong>223 mi</strong> (CPFs vazados).<br>
+            Fundo vermelho escuro. Chamada: "Incluindo os mortos."
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================== SEÇÃO 4 ======================== -->
+  <div class="secao" id="s4">
+    <div class="secao-header cor-4">
+      <div class="numero">4</div>
+      <h2>Privacidade, LGPD e os limites da lei</h2>
+      <div class="tempo">⏱ 6 min</div>
+    </div>
+    <div class="secao-body">
+
+      <h3 class="subtitulo-secao">📌 Pontos-chave para cobrir</h3>
+      <div class="bloco bloco-topicos">
+        <div class="bloco-label">Tópicos</div>
+        <ul class="topicos">
+          <li>O que são dados pessoais (nome, CPF, IP, localização, histórico de navegação)</li>
+          <li>A cada interação, um rastro é gerado, registrado e monetizado</li>
+          <li>LGPD — Lei Geral de Proteção de Dados: o que propõe e seus limites</li>
+          <li>Caso Serasa Experian (2021–2024): comercialização ilegal, ANPD omissa</li>
+          <li>Colonialismo de dados: Sul Global fornece matéria-prima para o Norte</li>
+          <li>A assimetria de poder: quem coleta, quem paga, quem perde</li>
+        </ul>
+      </div>
+
+      <div class="bloco bloco-fala">
+        <div class="bloco-label">🎤 Script de fala</div>
+        <div class="fala-texto">
+          O que é um dado pessoal? Qualquer informação que permita identificar você — direta ou indiretamente. Nome, CPF, IP, localização em tempo real, histórico de navegação, o tempo que seu olhar fica em um post.
+          <br><br>
+          A cada interação digital — uma busca, um like, uma compra — <strong>um rastro é gerado, armazenado e monetizado.</strong> Sem que você saiba. Sem que você consinta de verdade.
+          <br><br>
+          O Brasil tem a <strong>LGPD — Lei Geral de Proteção de Dados</strong>, inspirada no GDPR europeu. Em teoria, ela dá a você direito de saber quais dados foram coletados, pedir correção ou exclusão, e exige consentimento explícito para uso. Na prática, há lacunas sérias.
+          <br><br>
+          O caso da <strong>Serasa Experian</strong> escancara isso: a empresa foi investigada por manter e comercializar ilegalmente dados de milhões de brasileiros. O Ministério Público Federal entrou com ação pedindo multa superior a R$200 milhões. Mas o que mais chama atenção é a crítica ao próprio regulador — a <strong>ANPD foi acusada de omissão pelo MPF</strong> por ter tardado a agir, mesmo diante de ordens judiciais descumpridas.
+          <br><br>
+          A lição? <strong>Ter uma lei não é o mesmo que ter proteção.</strong> Enquanto as empresas operarem mais rápido do que os reguladores, os dados continuarão circulando.
+        </div>
+        <span class="fala-dica">💡 A analogia da "pegada digital" é poderosa aqui: assim como pegadas na neve, cada passo digital deixa uma marca permanente.</span>
+      </div>
+
+      <div class="bloco bloco-frase">
+        <div class="bloco-label">💬 Frase de impacto para slide</div>
+        <div class="frase-texto">"Ter uma lei não é o mesmo que ter proteção.<br>Os dados são mais rápidos que os reguladores."</div>
+      </div>
+
+      <hr class="divisor">
+
+      <div class="bloco bloco-frase" style="background: linear-gradient(135deg, #7a3500, #c45e1a);">
+        <div class="bloco-label">💬 Frase alternativa para slide — colonialismo de dados</div>
+        <div class="frase-texto">"O Sul Global fornece a matéria-prima digital. O Norte global colhe o lucro."</div>
+        <div class="frase-autor">— Baseado em Couldry & Mejias (2019)</div>
+      </div>
+
+      <div class="bloco bloco-slide">
+        <div class="bloco-label">🖥 Sugestões de slides</div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 12</span> O que é dado pessoal?</div>
+          <div class="slide-conteudo">
+            Ícones representando: nome, CPF, IP, localização GPS, histórico de compras, posts, tempo de tela.<br>
+            Chamada: "Tudo isso é sobre você — e é de outra pessoa."
+          </div>
+        </div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 13</span> LGPD — promessa vs realidade</div>
+          <div class="slide-conteudo">
+            Dois lados: esquerda (o que a lei promete) / direita (o que acontece na prática).<br>
+            Caso Serasa como exemplo concreto.
+          </div>
+        </div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 14</span> Colonialismo de dados</div>
+          <div class="slide-conteudo">
+            Mapa mundial com fluxo de dados saindo do Sul Global (Brasil, África, Ásia) em direção a EUA/Europa.<br>
+            "Os dados nascem aqui. O lucro fica lá."
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================== SEÇÃO 5 ======================== -->
+  <div class="secao" id="s5">
+    <div class="secao-header cor-5">
+      <div class="numero">5</div>
+      <h2>Resistência, autonomia e o que podemos fazer</h2>
+      <div class="tempo">⏱ 5 min</div>
+    </div>
+    <div class="secao-body">
+
+      <h3 class="subtitulo-secao">📌 Pontos-chave para cobrir</h3>
+      <div class="bloco bloco-topicos">
+        <div class="bloco-label">Tópicos</div>
+        <ul class="topicos">
+          <li>Alfabetização digital como ato político</li>
+          <li>Regulação estrutural (além de multas): o que precisaria mudar</li>
+          <li>Poder coletivo: o exemplo do GDPR europeu e suas consequências</li>
+          <li>Escolhas individuais: navegadores, configurações, consentimento consciente</li>
+          <li>O paradoxo: é possível resistir dentro do sistema?</li>
+          <li>Autonomia como valor que precisa ser reconquistado</li>
+        </ul>
+      </div>
+
+      <div class="bloco bloco-fala">
+        <div class="bloco-label">🎤 Script de fala</div>
+        <div class="fala-texto">
+          Chegamos à pergunta que mais importa: e agora, o que fazemos?
+          <br><br>
+          Primeira resposta: <strong>conhecimento é resistência.</strong> Entender como esses sistemas funcionam já muda a relação que temos com eles. Não é paranoia — é <strong>letramento digital.</strong>
+          <br><br>
+          No plano individual, existem escolhas: revisar as configurações de privacidade, ler o que se aceita, usar ferramentas que respeitam mais a sua privacidade. Mas é preciso ser honesto: <strong>resistência individual tem limites claros</strong> numa estrutura construída para extrair dados.
+          <br><br>
+          A mudança mais significativa é coletiva e regulatória. O GDPR europeu mostrou que regulação forte funciona — empresas mudaram práticas globais por conta das regras europeias. O Brasil tem a LGPD, mas precisa de uma <strong>ANPD com dentes</strong> — com recursos, independência e vontade de agir.
+          <br><br>
+          A questão mais profunda, porém, é filosófica: <strong>em que tipo de sociedade queremos viver?</strong> Uma onde cada emoção é mensurada para ser monetizada? Ou uma onde a experiência humana preserve algum espaço fora do mercado?
+          <br><br>
+          <strong>Autonomia não é automática. É conquista.</strong>
+        </div>
+        <span class="fala-dica">💡 Termine esta seção com uma reflexão aberta — convida o público a pensar, não apenas consumir informação.</span>
+      </div>
+
+      <div class="bloco bloco-frase">
+        <div class="bloco-label">💬 Frases de impacto para slides</div>
+        <div class="frase-texto">"Conhecimento é a primeira forma de resistência."</div>
+      </div>
+
+      <hr class="divisor">
+
+      <div class="bloco bloco-frase" style="background: linear-gradient(135deg, #8a1c1c, #c0392b);">
+        <div class="bloco-label">💬 Frase alternativa</div>
+        <div class="frase-texto">"Autonomia não é automática. É uma conquista coletiva."</div>
+      </div>
+
+      <div class="bloco bloco-slide">
+        <div class="bloco-label">🖥 Sugestões de slides</div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 15</span> O que você pode fazer</div>
+          <div class="slide-conteudo">
+            Checklist visual com 4–5 ações práticas (revisar privacidade, consentimento consciente, diversificar fontes).<br>
+            Tom: empoderador, não alarmista.
+          </div>
+        </div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 16</span> O que a sociedade precisa fazer</div>
+          <div class="slide-conteudo">
+            Três pilares: Regulação forte / Transparência obrigatória / Educação digital nas escolas
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================== CONCLUSÃO ======================== -->
+  <div class="secao" id="conclusao">
+    <div class="secao-header cor-conclusao">
+      <div class="numero">✦</div>
+      <h2>Conclusão — Como fechar com força</h2>
+      <div class="tempo">⏱ 3 min</div>
+    </div>
+    <div class="secao-body">
+
+      <div class="bloco bloco-fala">
+        <div class="bloco-label">🎤 Script de fala — Encerramento</div>
+        <div class="fala-texto">
+          Vamos recapitular o que vimos hoje.
+          <br><br>
+          <strong>Algoritmos</strong> não são neutros — são escolhas políticas e econômicas embarcadas em código. <strong>Nossos dados</strong> são matéria-prima num mercado que não pedimos para entrar. <strong>As leis existem</strong>, mas precisam de reguladores com vontade de agir. E <strong>a mudança real</strong> precisa ser coletiva.
+          <br><br>
+          A questão não é ser contra a tecnologia. É perguntar: <strong>quem ela serve? Quem decide as regras? E quem paga o preço?</strong>
+          <br><br>
+          O primeiro passo para qualquer transformação é entender o sistema em que vivemos. <strong>Vocês já deram esse passo hoje.</strong>
+          <br><br>
+          Obrigado.
+        </div>
+        <span class="fala-dica">💡 "Vocês já deram esse passo hoje" — é uma forma de valorizar o público e criar senso de pertencimento ao tema.</span>
+      </div>
+
+      <div class="bloco bloco-frase">
+        <div class="bloco-label">💬 Frase final — slide de encerramento</div>
+        <div class="frase-texto">"Entender o sistema é o primeiro ato de liberdade dentro dele."</div>
+      </div>
+
+      <div class="bloco bloco-slide">
+        <div class="bloco-label">🖥 Sugestão de slide final</div>
+        <div class="slide-sugestao">
+          <div class="slide-titulo"><span class="slide-num">SLIDE 17</span> Slide de encerramento</div>
+          <div class="slide-conteudo">
+            Fundo escuro. Frase centralizada grande: <em>"Entender o sistema é o primeiro ato de liberdade dentro dele."</em><br>
+            Abaixo: referências bibliográficas resumidas. Espaço para QR code ou contato.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RESUMÃO DE FRASES -->
+  <div class="secao">
+    <div class="secao-header" style="background: linear-gradient(135deg, #2c2c3e, #4a3f6b);">
+      <div class="numero">★</div>
+      <h2>Banco de Frases de Impacto — Resumo Rápido</h2>
+    </div>
+    <div class="secao-body">
+      <p style="font-size:0.88rem; color:#666; margin-bottom:18px">Use onde fizer mais sentido na sua apresentação. Todas podem ir nos slides ou na fala.</p>
+      <div class="grid2">
+        <div class="bloco bloco-frase" style="margin:0">
+          <div class="frase-texto" style="font-size:0.95rem">"Se o serviço é gratuito, o produto é você."</div>
+        </div>
+        <div class="bloco bloco-frase" style="margin:0; background: linear-gradient(135deg, #2d5086, #4a90d9);">
+          <div class="frase-texto" style="font-size:0.95rem">"A bolha não é um bug do sistema. É o produto."</div>
+        </div>
+        <div class="bloco bloco-frase" style="margin:0; background: linear-gradient(135deg, #1e5a3a, #27ae60);">
+          <div class="frase-texto" style="font-size:0.95rem">"Você não usa a plataforma. A plataforma usa você."</div>
+        </div>
+        <div class="bloco bloco-frase" style="margin:0; background: linear-gradient(135deg, #7a3500, #c45e1a);">
+          <div class="frase-texto" style="font-size:0.95rem">"Ter uma lei não é o mesmo que ter proteção."</div>
+        </div>
+        <div class="bloco bloco-frase" style="margin:0; background: linear-gradient(135deg, #8a1c1c, #c0392b);">
+          <div class="frase-texto" style="font-size:0.95rem">"Autonomia não é automática. É uma conquista coletiva."</div>
+        </div>
+        <div class="bloco bloco-frase" style="margin:0; background: linear-gradient(135deg, #1a2b4a, #6c3fa0);">
+          <div class="frase-texto" style="font-size:0.95rem">"Entender o sistema é o primeiro ato de liberdade dentro dele."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFERÊNCIAS -->
+  <div class="secao">
+    <div class="secao-header" style="background: #2c2c3e; color:white;">
+      <div class="numero">📚</div>
+      <h2>Referências para mencionar na apresentação</h2>
+    </div>
+    <div class="secao-body">
+      <ul class="topicos" style="font-size:0.9rem; line-height:2">
+        <li><strong>Byung-Chul Han</strong> — No Enxame: Perspectivas do Digital (2013)</li>
+        <li><strong>Eli Pariser</strong> — The Filter Bubble (2011)</li>
+        <li><strong>Frank Pasquale</strong> — The Black Box Society (2015)</li>
+        <li><strong>Shoshana Zuboff</strong> — A Era do Capitalismo de Vigilância (2019)</li>
+        <li><strong>Couldry & Mejias</strong> — The Costs of Connection (2019)</li>
+        <li><strong>Cambridge Analytica</strong> — FTC, 2018 | <strong>Megavazamento BR</strong> — 2021 | <strong>Dell</strong> — 2024</li>
+        <li><strong>Serasa Experian</strong> — MPF, 2021–2024 | <strong>LGPD</strong> — Lei 13.709/2018</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+</body>
+</html>
